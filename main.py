@@ -81,6 +81,11 @@ class URLRequest(BaseModel):
 
 
 # ─── 7. ROUTES ────────────────────────────────────────────────────────────────
+@app.get("/")
+async def root():
+    return {"status": "ok"}
+
+
 @app.post("/generate-llms-txt")
 @limiter.limit(f"{RATE_LIMIT}/minute")
 async def generate_llms(
