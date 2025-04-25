@@ -9,6 +9,19 @@ from slowapi.middleware import SlowAPIMiddleware
 from dotenv import load_dotenv
 from openai import OpenAI, OpenAIError
 from pydantic import BaseModel, HttpUrl
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI(title="Public LLMs-txt API")
+
+# ─────────────  CORS for “any origin”  ─────────────
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],       # wildcard → every scheme+host is allowed
+    allow_methods=["*"],       # allow GET, POST, PUT, DELETE, OPTIONS, …
+    allow_headers=["*"],       # allow any non-simple request header
+    allow_credentials=False,   # MUST be False with "*" (CORS spec)
+    max_age=86400,             # cache pre-flight 24 h (optional)
+)
 
 
 # ─── 1. CONFIGURATION ────────────────────────────────────────────────────────
