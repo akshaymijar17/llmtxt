@@ -80,7 +80,6 @@ def _get_api_key_from_request(request: Request) -> str:
 
 
 limiter = Limiter(key_func=_get_api_key_from_request)
-app = FastAPI(title="LLMs.txt Generator")
 app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
 app.add_exception_handler(RateLimitExceeded, lambda request, exc: JSONResponse(
