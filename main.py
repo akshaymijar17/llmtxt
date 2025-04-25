@@ -129,8 +129,17 @@ async def health_check() -> dict:
 # ─── 8. RUNNER ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    import uvicorn, os
+    import os, uvicorn
+
+    # DigitalOcean sets $PORT for you; default to 8000 locally
     port = int(os.getenv("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
+    # Listen on all interfaces, not just loopback
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=port,
+        reload=False,      # disable auto-reload in production
+        log_level="info",
+    )
 
 
